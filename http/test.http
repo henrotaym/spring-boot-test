@@ -1,2 +1,0 @@
-GET http://app:8080/api/tests
-content-type: application/json
