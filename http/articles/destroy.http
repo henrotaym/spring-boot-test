@@ -1,0 +1,2 @@
+DELETE  http://localhost:8080/api/articles/3
+content-type: application/json

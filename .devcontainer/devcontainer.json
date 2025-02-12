@@ -1,0 +1,18 @@
+{
+    "name": "Java",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/opt/apps/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "vscjava.vscode-java-debug",
+                "redhat.java",
+                "vmware.vscode-spring-boot",
+                "vscjava.vscode-maven",
+                "humao.rest-client"
+            ]
+        }
+    }
+}
