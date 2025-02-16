@@ -1,0 +1,10 @@
+PUT http://localhost:8080/api/articles/3
+content-type: application/json
+
+{
+    "title": "test-modified",
+    "slug": "test",
+    "description": "description",
+    "status": "DRAFT",
+    "createdAt": "2025-02-03T20:20:12.421Z"
+}

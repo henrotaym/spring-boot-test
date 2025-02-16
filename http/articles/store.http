@@ -2,10 +2,8 @@ POST http://localhost:8080/api/articles
 content-type: application/json
 
 {
-    "id": 3,
     "title": "test3",
     "slug": "test",
     "description": "description",
-    "status": "DRAFT",
-    "createdAt": "2025-02-03T20:20:12.421Z"
+    "status": "DRAFT"
 }

@@ -36,4 +36,13 @@ public class ArticleRepository {
             }
         }
     }
+
+    public void updateById(Integer id, Article article) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).id() == id) {
+                list.set(i, article);
+                break;
+            }
+        }
+    }
 }
