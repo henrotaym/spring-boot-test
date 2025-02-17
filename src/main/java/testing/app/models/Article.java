@@ -11,4 +11,8 @@ public record Article(
     String description,
     ArticleStatus status,
     Timestamp createdAt
-) {}
+) {
+    public Boolean isSaved() {
+        return this.id != null;
+    }
+}

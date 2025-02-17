@@ -1,15 +1,19 @@
 package testing.app.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import testing.app.exceptions.repositories.ModelNotFoundException;
 import testing.app.models.Article;
 import testing.app.repositories.ArticleJdbcTemplateRepository;
 import testing.app.repositories.ArticleRepository;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,16 +53,28 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public Article findById(@PathVariable Integer id) {
-        return this.articleRepository.findById(id);
+        try {
+            return this.articleRepository.findById(id);
+        } catch (ModelNotFoundException notFound) {
+            throw notFound.toResponse();
+        }
     }
 
-    // @DeleteMapping("/{id}")
-    // public void deleteById(@PathVariable Integer id) {
-    //     this.articleRepository.deleteById(id);
-    // }
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id) {
+        try {
+            this.articleRepository.deleteById(id);
+        } catch (ModelNotFoundException notFound) {
+            throw notFound.toResponse();
+        }
+    }
 
-    // @PutMapping("/{id}")
-    // public void update(@PathVariable Integer id, @RequestBody Article article) {
-    //     this.articleRepository.updateById(id, article);
-    // }
+    @PutMapping("/{id}")
+    public void update(@PathVariable Integer id, @RequestBody Article article) {
+        try {
+            this.articleRepository.save(article);
+        } catch (ModelNotFoundException notFound) {
+            throw notFound.toResponse();
+        }
+    }
 }
