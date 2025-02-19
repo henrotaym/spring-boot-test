@@ -1,2 +1,2 @@
-GET http://app:8080/api/articles/3
+GET http://app:8080/api/articles/2
 content-type: application/json

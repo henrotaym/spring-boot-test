@@ -1,5 +1,6 @@
 package testing.app.controllers;
 
+import java.lang.classfile.ClassFile.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import testing.app.enums.ArticleStatus;
 import testing.app.exceptions.repositories.ModelNotFoundException;
 import testing.app.models.Article;
 import testing.app.repositories.ArticleJdbcTemplateRepository;
 import testing.app.repositories.ArticleRepository;
+import testing.app.repositories.ArticleSpringDataRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -35,46 +38,39 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("api/articles")
 public class ArticleController {
     private ArticleJdbcTemplateRepository articleRepository;
+    private ArticleSpringDataRepository articleSpringDataRepository;
 
-    public ArticleController(ArticleJdbcTemplateRepository articleRepository) {
+    public ArticleController(
+        ArticleJdbcTemplateRepository articleRepository,
+        ArticleSpringDataRepository articleSpringDataRepository
+    ) {
         this.articleRepository = articleRepository;
+        this.articleSpringDataRepository = articleSpringDataRepository;
     }
     
     @GetMapping("")
     public List<Article> findAll() {
-        return this.articleRepository.findAll();
+        return this.articleSpringDataRepository.findByStatus(ArticleStatus.REVIEW);
     }
     
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public void store(@RequestBody Article article) {
-        this.articleRepository.store(article);
+        this.articleSpringDataRepository.save(article);
     }
 
     @GetMapping("/{id}")
-    public Article findById(@PathVariable Integer id) {
-        try {
-            return this.articleRepository.findById(id);
-        } catch (ModelNotFoundException notFound) {
-            throw notFound.toResponse();
-        }
+    public Optional<Article> findById(@PathVariable Integer id) {
+        return this.articleSpringDataRepository.findById(id);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Integer id) {
-        try {
-            this.articleRepository.deleteById(id);
-        } catch (ModelNotFoundException notFound) {
-            throw notFound.toResponse();
-        }
+        this.articleSpringDataRepository.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Integer id, @RequestBody Article article) {
-        try {
-            this.articleRepository.save(article);
-        } catch (ModelNotFoundException notFound) {
-            throw notFound.toResponse();
-        }
+    public void update(@RequestBody Article article) {
+        this.articleSpringDataRepository.save(article);
     }
 }

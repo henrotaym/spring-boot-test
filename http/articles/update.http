@@ -1,11 +1,10 @@
-PUT http://localhost:8080/api/articles/3
+PUT http://localhost:8080/api/articles/4
 content-type: application/json
 
 {
-    "id": 3,
+    "id": 4,
     "title": "test-modified",
     "slug": "test",
     "description": "description",
-    "status": "DRAFT",
-    "createdAt": "2025-02-03T20:20:12.421Z"
+    "status": "DRAFT"
 }

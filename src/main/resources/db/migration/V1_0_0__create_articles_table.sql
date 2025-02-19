@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS articles (
     slug VARCHAR(255) NOT NULL,
     description text,
     status VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    -- created_at TIMESTAMP NOT NULL,
     primary key (id)
 );
 
