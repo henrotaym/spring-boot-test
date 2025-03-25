@@ -7,77 +7,30 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import testing.app.enums.ArticleStatus;
 
 @Entity
 @Table(name = "articles")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String slug;
     private String description;
     @Enumerated(EnumType.STRING)
     private ArticleStatus status;
-
-    public Article() {
-
-    }
-
-    public Article(
-        Integer id,
-        String title,
-        String slug,
-        String description,
-        ArticleStatus status
-    ) {
-        this.id = id;
-        this.title = title;
-        this.slug = slug;
-        this.description = description;
-        this.status = status;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public void setStatus(ArticleStatus status) {
-        this.status = status;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public ArticleStatus getStatus() {
-        return status;
-    }
-
-    public String getTitle() {
-        return title;
-    }
 
     public Boolean isSaved() {
         return this.id != null;

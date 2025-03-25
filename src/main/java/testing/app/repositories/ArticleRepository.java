@@ -20,7 +20,7 @@ public class ArticleRepository {
 
     public Article findById(Integer id) {
         for (Article article : list) {
-            if (article.id() == id) {
+            if (article.getId() == id) {
                 return article;
             }
         }
@@ -30,7 +30,7 @@ public class ArticleRepository {
 
     public void deleteById(Integer id) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).id() == id) {
+            if (list.get(i).getId() == id) {
                 list.remove(i);
                 break;
             }
@@ -39,7 +39,7 @@ public class ArticleRepository {
 
     public void updateById(Integer id, Article article) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).id() == id) {
+            if (list.get(i).getId() == id) {
                 list.set(i, article);
                 break;
             }

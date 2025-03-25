@@ -1,8 +1,7 @@
-PUT http://localhost:8080/api/articles/4
+PUT http://localhost:8080/api/articles/1
 content-type: application/json
 
 {
-    "id": 4,
     "title": "test-modified",
     "slug": "test",
     "description": "description",

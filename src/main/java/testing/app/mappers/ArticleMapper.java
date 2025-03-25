@@ -2,7 +2,6 @@ package testing.app.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -20,9 +19,8 @@ public class ArticleMapper implements RowMapper<Article> {
         String slug = resultSet.getString("slug");
         String description = resultSet.getString("description");
         ArticleStatus status = ArticleStatus.valueOf(resultSet.getString("status"));
-        Timestamp createdAt = resultSet.getTimestamp("created_at");
 
-        return new Article(id, title, slug, description, status, createdAt);
+        return new Article(id, title, slug, description, status);
     }
     
 }

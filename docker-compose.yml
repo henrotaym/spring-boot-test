@@ -1,0 +1,60 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    env_file:
+      - .env
+    volumes:
+      - ./:/opt/apps/app
+      - mvn_deps:/root/.m2
+    networks:
+      - accessible
+    # labels:
+    #   - traefik.enable=true
+    #   - traefik.http.routers.articles-app.rule=Host(`articles.henrotaym.ip-ddns.com`)
+    #   - traefik.http.routers.articles-app.entrypoints=websecure
+    #   - traefik.http.routers.articles-app.tls=true
+    ports:
+      - ${APP_PORT}:${APP_PORT_FORWARD}
+  database:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      PGPASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - pgsql_data:/var/lib/postgresql/data
+    networks:
+      - accessible
+    # labels:
+    #   - traefik.enable=true
+    #   - traefik.tcp.routers.articles-database.rule=HostSNI(`articles-database.henrotaym.ip-ddns.com`)
+    #   - traefik.tcp.routers.articles-database.tls=true
+    #   - traefik.tcp.routers.articles-database.entrypoints=pgsql
+    ports:
+      - ${DB_PORT}:${DB_PORT_FORWARD}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "${DB_DATABASE}",
+          "-U",
+          "${DB_USERNAME}",
+        ]
+      retries: 3
+      timeout: 5s
+networks:
+  accessible:
+    external: true
+volumes:
+  pgsql_data:
+    driver: local
+  mvn_deps:
+    driver: local

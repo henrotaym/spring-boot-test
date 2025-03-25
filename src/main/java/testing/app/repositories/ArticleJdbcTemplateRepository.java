@@ -34,14 +34,14 @@ public class ArticleJdbcTemplateRepository {
     public void store(Article article) {
         String sql = "INSERT INTO articles (title, slug, description, status, created_at) VALUES (?, ?, ?, ?, NOW())";
 
-        this.jdbcTemplate.update(sql, article.title(), article.slug(), article.description(), article.status().toString());
+        this.jdbcTemplate.update(sql, article.getTitle(), article.getSlug(), article.getDescription(), article.getStatus().toString());
     }
 
     public void update(Article article) throws ModelNotFoundException {
-        this.findById(article.id());
+        this.findById(article.getId());
         String sql = "UPDATE articles SET title = ?, slug = ?, description = ?, status = ? WHERE id = ?";
 
-        this.jdbcTemplate.update(sql, article.title(), article.slug(), article.description(), article.status().toString(), article.id());
+        this.jdbcTemplate.update(sql, article.getTitle(), article.getSlug(), article.getDescription(), article.getStatus().toString(), article.getSlug());
     }
 
     public void save(Article article) throws ModelNotFoundException {

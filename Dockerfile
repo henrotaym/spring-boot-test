@@ -28,3 +28,5 @@ COPY . .
 
 # Make devops scripts executable
 RUN chmod +x ./devops/*.sh
+
+EXPOSE 8080
